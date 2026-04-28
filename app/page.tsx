@@ -2,11 +2,13 @@
 
 import { useState } from "react";
 import { calculateERC } from "./utils/ercCalculator";
+import UsageModal from "./components/UsageModal";
 
 export default function Home() {
   const [ercCode, setErcCode] = useState("");
   const [unlockCode, setUnlockCode] = useState("");
   const [error, setError] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleCalculate = () => {
     setError("");
@@ -29,6 +31,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gray-100 py-8">
+      <UsageModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
       <div className="max-w-2xl mx-auto px-4">
         <div className="bg-white rounded-lg shadow-lg p-8">
           <h1 className="text-3xl font-bold text-center text-gray-800 mb-2">
@@ -90,13 +93,18 @@ export default function Home() {
           </div>
 
           <div className="mt-8 pt-6 border-t border-gray-200">
-            <h3 className="font-semibold text-gray-800 mb-2">使い方：</h3>
-            <ol className="list-decimal list-inside space-y-1 text-sm text-gray-600">
-              <li>車載機のメインボタンを長押ししながら、パーキングライトを3-4回点滅させます</li>
-              <li>サービスモードで表示される16桁のERCコードを入力します</li>
-              <li>「計算する」ボタンをクリックします</li>
-              <li>表示された8桁のロック解除コードを車載機に入力します</li>
-            </ol>
+            <div className="flex items-center justify-between mb-2">
+              <h3 className="font-semibold text-gray-800">使い方：</h3>
+              <button
+                onClick={() => setIsModalOpen(true)}
+                className="text-sm text-blue-600 hover:text-blue-800 underline"
+              >
+                機種を選んで確認する
+              </button>
+            </div>
+            <p className="text-sm text-gray-500">
+              「機種を選んで確認する」をクリックすると、お使いのナビの機種に合わせた手順を確認できます。
+            </p>
           </div>
         </div>
       </div>
