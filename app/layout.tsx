@@ -44,6 +44,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const adsenseClientId = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID?.trim();
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "WebApplication",
@@ -62,6 +63,15 @@ export default function RootLayout({
 
   return (
     <html lang="ja">
+      <head>
+        {adsenseClientId && (
+          <script
+            async
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${encodeURIComponent(adsenseClientId)}`}
+            crossOrigin="anonymous"
+          />
+        )}
+      </head>
       <body className="antialiased">
         <script
           type="application/ld+json"
